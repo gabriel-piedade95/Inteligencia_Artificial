@@ -48,5 +48,5 @@ class Perceptron(object):
 
     def predict(self, X):
 
-        net_input = np.dot(X, self.w) + self.b
+        net_input = np.dot(X, self.W) + self.b
         return np.where(net_input >=0.0 , 1, -1)
