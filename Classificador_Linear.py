@@ -1,7 +1,7 @@
 import random as rand
 import numpy as np
 
-class Perceptron:
+class Perceptron(object):
     
     def __init__(self, eta = 0.1, epochs = 50, seed = 1):
         
@@ -10,14 +10,12 @@ class Perceptron:
         self._seed = seed 
 
 
-
-
-
     def fit(self, X, Y):
             
-        SEED = self._seed
+        rand.seed(self._seed)
         self.W  = np.array([rand.random() * 10 for x in range(X.shape[1])])
         self.b = np.array([rand.random()*10])
+        self.n_tentativas = 0
         
         for epoch in range(self._epochs):
                 
@@ -39,9 +37,16 @@ class Perceptron:
                     self.b = self.b + D_y
                         
                     k += 1
-                    
+
+            self.n_tentativas += 1
+
             if sum(erros_lista) == 0:
                     
                 break
                 
         return self
+
+    def predict(self, X):
+
+        net_input = np.dot(X, self.w) + self.b
+        return np.where(net_input >=0.0 , 1, -1)
